@@ -1,22 +1,38 @@
-# Carrera de Amor
+# Carrera del Amor
 
-Juego de trivia de pareja para dos celulares. **José** corre con la Escudería Relámpago
-y **Fer** con el Escuadrón Estelar: cada quien contesta sobre sí mismo, se intercambian
-las respuestas y gana quien adivine primero todo el tablero.
+Juego de trivia de pareja para dos celulares. Cada quien contesta 10 preguntas sobre sí
+mismo, se intercambian las respuestas y gana quien adivine primero todo el tablero.
 
-Todo el arte del juego (autos, naves, banderas, trofeos, corazones, cronómetros…) son
-ilustraciones vectoriales SVG dibujadas dentro del propio `index.html`. **No se usa ni un
-solo emoji**, así que el juego se ve igual en iPhone, Android, Windows y Mac.
+**Dirección de arte:** rosa profundo y oro repujado, marcos de filigrana, tarjetas de
+pergamino con encaje, atardecer entre pétalos y un cielo de constelaciones de corazón
+para el podio.
+
+Todo el arte (rosas, coronas, medallas, relojes de bolsillo, candados, llaves, banderas,
+corazones, filigranas) son ilustraciones vectoriales SVG dibujadas dentro del propio
+`index.html`. **No se usa ni un solo emoji**, así que el juego se ve igual en iPhone,
+Android, Windows y Mac.
+
+**Sin dependencias de red:** las tipografías (Cinzel Decorative, Cinzel y Great Vibes) van
+empotradas en el archivo como `@font-face` con data URI, en un subconjunto con el alfabeto
+completo del español. El juego se ve idéntico aunque no cargue nada externo.
 
 ---
 
 ## Estructura
 
 ```
-public/index.html            el juego completo (arte, estilos y lógica en un archivo)
+public/index.html            el juego completo (arte, tipografías, estilos y lógica)
+public/assets/               aquí van jose.png y fer.png (ver assets/LEEME.md)
 netlify/functions/sala.mjs   función serverless que sincroniza los dos celulares
 netlify.toml                 configuración de Netlify
 ```
+
+## Sus fotos
+
+Pon `jose.png` y `fer.png` en `public/assets/` y aparecerán en los medallones dorados del
+lobby, en las tarjetas de corredor, en la barra de preguntas y en los carriles de la
+carrera. Si los archivos no existen, el juego dibuja el emblema de cada quien (el auto y
+la nave) y todo funciona igual. Los detalles están en `public/assets/LEEME.md`.
 
 ## Cómo desplegarlo
 
@@ -51,18 +67,26 @@ Si sale `{"error":"Faltan las variables de Upstash"}`, revisa el paso 2 y vuelve
 
 ## Cómo se juega
 
-1. **Elegir personaje.** Cada quien abre el sitio y toca su tarjeta: José (auto) o Fer (nave).
-   El color de toda la interfaz cambia según el equipo elegido.
-2. **Crear o entrar.** José toca **CREAR SALA** y aparece un código de 4 caracteres.
-   Fer escribe ese código y toca **ENTRAR CON CÓDIGO**.
-3. **Responder (2 minutos).** Cada quien contesta 10 preguntas *sobre sí mismo* en su propio
-   celular. Las tarjetas se marcan en verde conforme se llenan y el cronómetro corre arriba.
-4. **Intercambio.** Animación de hiperespacio con las cartas volando: las respuestas cambian de dueño.
-5. **La carrera.** Semáforo de arranque de 3 luces y a correr. Cada acierto avanza una casilla
-   en tu carril; el tablero muestra los dos vehículos en vivo. Puedes **SALTAR** una pregunta
-   difícil o usar *"sí era, valió por honor"* cuando le atinaste con otras palabras.
-6. **Podio.** Corona, medalla, confeti y el mensaje personalizado para cada quien.
-   José controla el botón de **siguiente ronda**; el marcador se acumula toda la sesión.
+1. **Elegir corredor.** Cada quien abre el sitio y toca su tarjeta: Fer (*Velocidad de
+   Corazón*) o José (*Paciencia Infinita*). Arriba, la barra **Corazón de Afecto** acumula
+   todos los aciertos de la pareja durante la sesión.
+2. **Abrir o entrar.** Uno toca **ABRIR NUESTRA SALA** y aparece un código de 4 caracteres
+   en fichas de pergamino. El otro escribe ese código y toca **ENTRAR CON CÓDIGO**.
+3. **Nuestros Momentos (2 minutos).** Cada quien contesta 10 preguntas *sobre sí mismo* en
+   tarjetas de pergamino con candado y llave. La llave se abre cuando llenas la respuesta y
+   el reloj de bolsillo de corazón marca el tiempo que llevan juntos en la ronda.
+4. **Intercambio.** Las cartas, rosas y llaves vuelan por la pantalla: las respuestas
+   cambian de dueño.
+5. **La carrera.** Semáforo de arranque de 3 luces y a correr. Cada acierto avanza una
+   casilla en tu carril; el tablero muestra los dos corredores en vivo. Puedes **SALTAR**
+   una pregunta difícil o usar *"sí era, valió por honor"* cuando le atinaste con otras
+   palabras.
+6. **El podio.** Cielo de constelaciones de corazón, corona flotante, la frase escrita a
+   mano letra por letra y un pedestal de mármol con rosas: placa de oro para quien gana y
+   de plata para el segundo. Quien abrió la sala controla el botón de **siguiente ronda**;
+   el marcador se acumula toda la sesión.
+
+También hay un botón de **Cómo se juega** en el lobby que abre estas reglas dentro del juego.
 
 ### Modo demo
 
@@ -102,6 +126,8 @@ También puedes entrar directo con `?demo=1` en la URL.
 - **Casillas por ronda:** la constante `PREGUNTAS` (10).
 - **Tolerancia al escribir:** la función `acierta` acepta acentos, mayúsculas y errores de dedo
   hasta un 78% de similitud. Súbelo o bájalo ahí mismo.
-- **Colores:** las variables CSS en `:root` (equipo José) y en `body[data-team="F"]` (equipo Fer).
+- **Colores y tipografías:** las variables CSS en `:root`.
+- **Nombres de los rasgos:** la constante `RASGO`.
+- **Meta del Corazón de Afecto:** la constante `META_AFECTO` (100 corazones).
 - **Ilustraciones:** el bloque `<svg id="sprites">`. Cada dibujo es un `<symbol>` con su `id`;
   para cambiar uno solo edita ese símbolo y se actualiza en todas las pantallas donde aparece.
