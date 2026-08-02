@@ -192,7 +192,7 @@ body[data-screen="setup"] .net span,body[data-screen="play"] .net span{display:n
 .medallon .foto{border-radius:50%;overflow:hidden;width:100%;height:100%;position:relative;display:grid;
   place-items:center;background:radial-gradient(circle at 50% 28%,#ffd7e4,#e08bb0 58%,#a63d70)}
 .medallon .foto img{width:100%;height:100%;object-fit:cover;display:block}
-.medallon .foto svg{width:76%;height:76%}
+.medallon .foto .inicial{width:70%;height:70%;font-family:var(--gala)}
 
 /* ============================================================
    LOBBY
@@ -232,7 +232,9 @@ body[data-screen="setup"] .net span,body[data-screen="play"] .net span{display:n
 .corredor .oro{padding:4px}
 .corredor .lienzo{display:block;aspect-ratio:4/5;position:relative;
   background:radial-gradient(circle at 50% 26%,#ffe3ec,#f2a9c4 52%,#c96393 100%)}
-.corredor .lienzo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.corredor .lienzo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.corredor .lienzo .inicial{position:absolute;inset:0;width:100%;height:100%;z-index:2;
+  font-family:var(--gala)}
 .corredor .lienzo::before{content:'';position:absolute;inset:0;opacity:.5;
   background:
    radial-gradient(circle at 26% 22%,rgba(255,255,255,.55) 0 5px,transparent 6px),
@@ -240,8 +242,7 @@ body[data-screen="setup"] .net span,body[data-screen="play"] .net span{display:n
    radial-gradient(circle at 20% 74%,rgba(255,255,255,.45) 0 4px,transparent 5px),
    radial-gradient(circle at 78% 80%,rgba(255,255,255,.5) 0 5px,transparent 6px),
    repeating-linear-gradient(45deg,rgba(255,255,255,.16) 0 2px,transparent 2px 16px)}
-.corredor .lienzo svg{position:absolute;left:8%;top:27%;width:84%;height:46%;
-  filter:drop-shadow(0 8px 14px rgba(90,20,55,.45))}
+
 .corredor .nombre{font-family:var(--gala);font-size:15px;letter-spacing:.6px;color:var(--oro-luz);
   text-shadow:0 2px 0 rgba(70,10,35,.9)}
 .corredor .cinta{position:relative;display:block;padding:7px 6px 8px;border-radius:9px;text-align:center;
@@ -413,7 +414,7 @@ body[data-screen="setup"] .net span,body[data-screen="play"] .net span{display:n
   color:var(--oro-luz)}
 .carril.yo .quien::after{content:'TÚ';font-family:var(--rotulo);font-weight:600;font-size:7px;
   letter-spacing:1px;background:var(--oro);color:#5a2010;padding:1px 6px;border-radius:4px}
-.senda{position:relative;flex:1;height:38px;border-radius:10px;display:flex;gap:3px;padding:4px;
+.senda{position:relative;flex:1;height:44px;border-radius:12px;display:flex;gap:3px;padding:4px;
   background:linear-gradient(180deg,#5e1236,#3d0a23);
   box-shadow:inset 0 3px 9px rgba(20,0,10,.75),0 0 0 1.5px var(--oro-sombra)}
 .casilla{flex:1;border-radius:5px;background:rgba(255,220,235,.09);transition:.35s}
@@ -422,9 +423,9 @@ body[data-screen="setup"] .net span,body[data-screen="play"] .net span{display:n
 .carril.f .casilla.on{background:linear-gradient(180deg,#ffe6f2,#b06cff);
   box-shadow:0 0 12px rgba(180,120,255,.95);animation:brote .45s}
 @keyframes brote{from{transform:scaleY(.2)}60%{transform:scaleY(1.4)}to{transform:scaleY(1)}}
-.movil{position:absolute;top:50%;left:7%;width:40px;height:26px;transform:translate(-50%,-50%);z-index:4;
-  transition:left .75s cubic-bezier(.34,1.5,.5,1);filter:drop-shadow(0 4px 7px rgba(20,0,10,.75))}
-.movil svg{width:100%;height:100%}
+.movil{position:absolute;top:50%;left:7%;width:36px;height:36px;padding:3px;
+  transform:translate(-50%,-50%);z-index:4;transition:left .75s cubic-bezier(.34,1.5,.5,1);
+  box-shadow:0 4px 10px rgba(20,0,10,.7),inset 0 1px 0 rgba(255,255,255,.6)}
 .movil.j{animation:vaiven .6s ease-in-out infinite}
 .movil.f{animation:planea 2.4s ease-in-out infinite}
 @keyframes vaiven{50%{transform:translate(-50%,-56%) rotate(-2.5deg)}}
@@ -545,8 +546,7 @@ body[data-screen="setup"] .net span,body[data-screen="play"] .net span{display:n
 .placa.gana .insignia{width:46px;height:46px;animation:brinca 1.5s ease-in-out infinite}
 @keyframes brinca{0%,100%{transform:translateY(0) rotate(0)}32%{transform:translateY(-11px) rotate(-6deg)}64%{transform:translateY(0) rotate(6deg)}}
 .placa .insignia svg{width:100%;height:100%}
-.placa .vehic{width:52px;height:32px}
-.placa .vehic svg{width:100%;height:100%}
+.placa .caraPlaca{width:56px;height:56px}
 .placa b{font-family:var(--gala);font-size:13px;color:#5a2a12}
 .placa u{font-family:var(--rotulo);font-weight:600;text-decoration:none;font-size:20px;color:#5a2a12}
 .pieResultado{width:100%;max-width:440px;padding-top:11px}
@@ -777,33 +777,7 @@ body[data-screen="setup"] .net span,body[data-screen="play"] .net span{display:n
   <path d="M38 16c-4 4-5 7-3 9 2 2 4 .8 5-1 1 1.8 3 3 5 1 2-2 1-5-3-9-1.4-1.4-2.6-1.4-4 0z" fill="url(#gRojo)"/>
 </symbol>
 
-<symbol id="i-auto" viewBox="0 0 112 64">
-  <ellipse cx="58" cy="58" rx="45" ry="4.5" fill="#3a1020" opacity=".3"/>
-  <rect x="3" y="19" width="24" height="5.5" rx="2.6" fill="#e86a6a"/>
-  <rect x="12" y="23" width="5.5" height="17" rx="2" fill="#8a0a24"/>
-  <path d="M34 34 L44 18Q46 15 50 15h17q4 0 6 3l10 16z" fill="#cc2740"/>
-  <path d="M40 32 L47 21h22l7 11z" fill="url(#gCristal)"/>
-  <path d="M9 48q-4 0-4-4v-5q0-4 5-5l21-4h50l22 5q6 1 6 5v4q0 4-5 4z" fill="url(#gCarro)"/>
-  <path d="M31 35h48l8 1.8H29z" fill="#fff" opacity=".28"/>
-  <path d="M64 33l-11 10h6l-4 9 12-11h-6z" fill="url(#gOro)" stroke="#fff6d2" stroke-width="1"/>
-  <ellipse cx="99" cy="40" rx="5" ry="3.4" fill="#fff3b8"/>
-  <circle cx="30" cy="47" r="11.5" fill="#241019"/><circle cx="30" cy="47" r="6" fill="url(#gPlata)"/>
-  <circle cx="86" cy="47" r="11.5" fill="#241019"/><circle cx="86" cy="47" r="6" fill="url(#gPlata)"/>
-</symbol>
 
-<symbol id="i-nave" viewBox="0 0 112 64">
-  <ellipse cx="56" cy="58" rx="41" ry="4" fill="#3a1020" opacity=".28"/>
-  <path d="M35 26 L11 7 L6 14 L27 30z" fill="url(#gNave)"/>
-  <path d="M35 39 L11 58 L6 51 L27 35z" fill="url(#gNave)"/>
-  <circle cx="10" cy="10" r="3" fill="#ff6a95"/><circle cx="10" cy="55" r="3" fill="#c9a2ff"/>
-  <rect x="15" y="21" width="30" height="8" rx="4" fill="#9c96bd"/>
-  <rect x="15" y="36" width="30" height="8" rx="4" fill="#9c96bd"/>
-  <path d="M106 32 L74 20 L34 22Q21 26 21 32q0 6 13 10l40 2z" fill="url(#gNave)"/>
-  <path d="M106 32 L74 20 L34 22Q21 26 21 32z" fill="#fff" opacity=".28"/>
-  <path d="M45 30h30v4.6H45z" fill="#c47ad6"/>
-  <path d="M80 27 L65 24.4 L58.5 32 L65 39.6 L80 37z" fill="url(#gCristal)"/>
-  <circle cx="95" cy="32" r="2.4" fill="url(#gOro)"/>
-</symbol>
 
 <symbol id="i-carta" viewBox="0 0 64 64">
   <rect x="5" y="14" width="54" height="38" rx="5" fill="#fffaf0" stroke="#c9a882" stroke-width="1.6"/>
@@ -989,13 +963,13 @@ body[data-screen="setup"] .net span,body[data-screen="play"] .net span{display:n
   <div class="pistaBox">
     <div class="carril j" id="laneJ">
       <span class="quien"><span class="medallon" id="carrilJ"></span><b>JOSÉ</b></span>
-      <div class="senda" id="trackJ"><div class="movil j" id="tokJ"><svg><use href="#i-auto"/></svg></div></div>
+      <div class="senda" id="trackJ"><div class="movil j medallon" id="tokJ"></div></div>
       <span class="meta"><svg><use href="#i-bandera"/></svg></span>
       <span class="tantos" id="ptsJ">0</span>
     </div>
     <div class="carril f" id="laneF">
       <span class="quien"><span class="medallon" id="carrilF"></span><b>FER</b></span>
-      <div class="senda" id="trackF"><div class="movil f" id="tokF"><svg><use href="#i-nave"/></svg></div></div>
+      <div class="senda" id="trackF"><div class="movil f medallon" id="tokF"></div></div>
       <span class="meta"><svg><use href="#i-corazon"/></svg></span>
       <span class="tantos" id="ptsF">0</span>
     </div>
@@ -1153,8 +1127,8 @@ const DEMO_ANS=["Sushi","Cheesecake","Chai latte","Morado","Interestelar","Frien
  "Las Chicas Superpoderosas","Mi cacao","Que me duele la cabeza"];
 
 const NAMES={J:'José',F:'Fer'};
-const EMBLEMA={J:'#i-auto',F:'#i-nave'};
-const RETRATO={J:'assets/jose.png',F:'assets/fer.png'};
+const RETRATO={J:'assets/jose.jpg',F:'assets/fer.jpg'};
+const RETRATO_TARJETA={J:'assets/jose-tarjeta.jpg',F:'assets/fer-tarjeta.jpg'};
 const RASGO={J:'Paciencia Infinita',F:'Velocidad de Corazón'};
 const COLORS={J:['#e0203f','#ff8fb4','#e7c163','#ffffff'],F:['#c47ad6','#8e6ad6','#e7c163','#ffe1ea']};
 const API='/api/sala', PREGUNTAS=10, SETUP_SEG=120, META_AFECTO=100;
@@ -1172,21 +1146,26 @@ const show=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remo
   $(id).classList.add('on');document.body.dataset.screen=id;};
 const ico=(id,cls)=>'<svg class="'+(cls||'ico')+'"><use href="'+id+'"/></svg>';
 
-/* Retratos: si la foto no existe se dibuja el emblema del corredor. */
-function conRespaldo(caja,html,quien){
-  caja.innerHTML=html;
-  const img=caja.querySelector('img'),svg=caja.querySelector('svg');
-  img.onerror=()=>{img.remove();svg.style.display='block';};
+/* Retratos. Si una foto no carga, en su lugar queda la inicial en oro. */
+const inicial=q=>'<svg class="inicial" viewBox="0 0 64 64" style="display:none">'+
+  '<text x="32" y="46" text-anchor="middle" font-size="40" fill="#fff6d2">'+NAMES[q][0]+'</text></svg>';
+const cara=(q,tarjeta)=>'<img alt="'+NAMES[q]+'" data-respaldo src="'+
+  (tarjeta?RETRATO_TARJETA[q]:RETRATO[q])+'">'+inicial(q);
+function activarRespaldo(raiz){
+  raiz.querySelectorAll('img[data-respaldo]').forEach(img=>{
+    img.onerror=()=>{const s=img.parentNode.querySelector('.inicial');
+      img.remove(); if(s) s.style.display='block';};
+  });
 }
-function pinta(caja,quien){
+function pinta(caja,quien){                 /* medallón circular */
   if(!caja)return;
-  conRespaldo(caja,'<span class="foto"><img alt="" src="'+RETRATO[quien]+'">'+
-    '<svg style="display:none"><use href="'+EMBLEMA[quien]+'"/></svg></span>',quien);
+  caja.innerHTML='<span class="foto">'+cara(quien)+'</span>';
+  activarRespaldo(caja);
 }
-function pintaLienzo(caja,quien){
+function pintaLienzo(caja,quien){           /* tarjeta grande del lobby */
   if(!caja)return;
-  conRespaldo(caja,'<img alt="" src="'+RETRATO[quien]+'">'+
-    '<svg style="display:none"><use href="'+EMBLEMA[quien]+'"/></svg>',quien);
+  caja.innerHTML=cara(quien,true);
+  activarRespaldo(caja);
 }
 
 /* ============================================================
@@ -1351,6 +1330,7 @@ sembrarConstelaciones($('result'));
 pinta($('medF'),'F'); pinta($('medJ'),'J');
 pintaLienzo($('lienzoF'),'F'); pintaLienzo($('lienzoJ'),'J');
 pinta($('carrilJ'),'J'); pinta($('carrilF'),'F');
+pinta($('tokJ'),'J'); pinta($('tokF'),'F');
 
 function elegir(b){
   document.querySelectorAll('.corredor').forEach(x=>x.classList.remove('sel'));
@@ -1754,10 +1734,12 @@ function abrirResult(){
   const otro=r.w==='J'?'F':'J',pr={J:r.pJ,F:r.pF};
   const placa=(clase,insignia,quien,tantos)=>
     '<div class="placa '+clase+'"><span class="insignia">'+ico(insignia,'')+'</span>'+
-    '<span class="vehic">'+ico(EMBLEMA[quien],'')+'</span><b>'+NAMES[quien]+'</b><u>'+tantos+'</u></div>';
+    '<span class="medallon caraPlaca"><span class="foto">'+cara(quien)+'</span></span>'+
+    '<b>'+NAMES[quien]+'</b><u>'+tantos+'</u></div>';
   $('podium').innerHTML=empate
     ? placa('gana','#i-trofeo','J',r.pJ)+placa('gana','#i-trofeo','F',r.pF)
     : placa('pierde','#i-medalla',otro,pr[otro])+placa('gana','#i-corona',r.w,pr[r.w]);
+  activarRespaldo($('podium'));
   sGo();
   const all=[...COLORS.J,...COLORS.F];
   burst(cv.width*.5,cv.height*.5,all,150);

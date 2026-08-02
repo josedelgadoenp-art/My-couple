@@ -1,18 +1,26 @@
-# Sus retratos
+# Los retratos de José y Fer
 
-El juego busca dos imágenes en esta carpeta:
+El juego usa cuatro imágenes de esta carpeta:
 
 ```
-public/assets/jose.png
-public/assets/fer.png
+jose.jpg            retrato cuadrado  (medallones, carriles de la carrera y placas del podio)
+fer.jpg
+jose-tarjeta.jpg    retrato vertical  (las tarjetas grandes del lobby)
+fer-tarjeta.jpg
 ```
 
-Si están, aparecen en los medallones dorados del lobby, en las tarjetas de corredor,
-en la barra de la pantalla de preguntas y en los carriles de la carrera.
-Si no están, el juego dibuja solo el emblema de cada quien (el auto y la nave) y todo
-sigue funcionando igual — no se rompe nada.
+Las que están ahora salieron recortadas del boceto original.
 
-**Recomendación:** imágenes cuadradas o verticales, mínimo 600 × 750 px, con la cara
-centrada en la parte de arriba (los medallones son circulares y recortan por el centro).
-Sirve `.png` o `.jpg` renombrado a `.png`. Si prefieres otro nombre o formato, cambia la
-constante `RETRATO` al inicio del `<script>` de `public/index.html`.
+## Cambiarlas
+
+Reemplaza los archivos conservando los nombres y listo — no hay que tocar código.
+
+- **Cuadradas:** 320 × 320 px, con la cara centrada. Se recortan en círculo, así que deja
+  aire alrededor de la cabeza.
+- **Verticales:** 440 × 550 px (proporción 4:5), de la cabeza al pecho.
+
+Si prefieres otros nombres o formatos, cambia las constantes `RETRATO` y `RETRATO_TARJETA`
+al inicio del `<script>` de `public/index.html`.
+
+Si alguno de los archivos falta o no carga, el juego dibuja en su lugar la inicial de cada
+quien en oro y todo sigue funcionando igual.

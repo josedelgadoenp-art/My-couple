@@ -22,17 +22,18 @@ completo del español. El juego se ve idéntico aunque no cargue nada externo.
 
 ```
 public/index.html            el juego completo (arte, tipografías, estilos y lógica)
-public/assets/               aquí van jose.png y fer.png (ver assets/LEEME.md)
+public/assets/               los retratos de José y Fer (ver assets/LEEME.md)
 netlify/functions/sala.mjs   función serverless que sincroniza los dos celulares
 netlify.toml                 configuración de Netlify
 ```
 
-## Sus fotos
+## Sus retratos
 
-Pon `jose.png` y `fer.png` en `public/assets/` y aparecerán en los medallones dorados del
-lobby, en las tarjetas de corredor, en la barra de preguntas y en los carriles de la
-carrera. Si los archivos no existen, el juego dibuja el emblema de cada quien (el auto y
-la nave) y todo funciona igual. Los detalles están en `public/assets/LEEME.md`.
+Los avatares de José y Fer están en `public/assets/` y aparecen en los medallones dorados
+del lobby, en las tarjetas de corredor, en la barra de la pantalla de preguntas, corriendo
+por los carriles de la carrera y en las placas del podio. Para cambiarlos basta con
+reemplazar los archivos conservando los nombres; los detalles están en
+`public/assets/LEEME.md`. Si alguno falta, el juego dibuja la inicial en oro en su lugar.
 
 ## Cómo desplegarlo
 
@@ -67,8 +68,8 @@ Si sale `{"error":"Faltan las variables de Upstash"}`, revisa el paso 2 y vuelve
 
 ## Cómo se juega
 
-1. **Elegir corredor.** Cada quien abre el sitio y toca su tarjeta: Fer (*Velocidad de
-   Corazón*) o José (*Paciencia Infinita*). Arriba, la barra **Corazón de Afecto** acumula
+1. **Elegir corredor.** Cada quien abre el sitio y toca su tarjeta con su retrato:
+   Fer (*Velocidad de Corazón*) o José (*Paciencia Infinita*). Arriba, la barra **Corazón de Afecto** acumula
    todos los aciertos de la pareja durante la sesión.
 2. **Abrir o entrar.** Uno toca **ABRIR NUESTRA SALA** y aparece un código de 4 caracteres
    en fichas de pergamino. El otro escribe ese código y toca **ENTRAR CON CÓDIGO**.
@@ -78,12 +79,12 @@ Si sale `{"error":"Faltan las variables de Upstash"}`, revisa el paso 2 y vuelve
 4. **Intercambio.** Las cartas, rosas y llaves vuelan por la pantalla: las respuestas
    cambian de dueño.
 5. **La carrera.** Semáforo de arranque de 3 luces y a correr. Cada acierto avanza una
-   casilla en tu carril; el tablero muestra los dos corredores en vivo. Puedes **SALTAR**
+   casilla en tu carril; el tablero muestra a los dos, en medallón dorado, avanzando en vivo. Puedes **SALTAR**
    una pregunta difícil o usar *"sí era, valió por honor"* cuando le atinaste con otras
    palabras.
 6. **El podio.** Cielo de constelaciones de corazón, corona flotante, la frase escrita a
-   mano letra por letra y un pedestal de mármol con rosas: placa de oro para quien gana y
-   de plata para el segundo. Quien abrió la sala controla el botón de **siguiente ronda**;
+   mano letra por letra y un pedestal de mármol con rosas: placa de oro con corona para
+   quien gana y de plata con medalla para el segundo, cada una con su retrato. Quien abrió la sala controla el botón de **siguiente ronda**;
    el marcador se acumula toda la sesión.
 
 También hay un botón de **Cómo se juega** en el lobby que abre estas reglas dentro del juego.
@@ -129,5 +130,6 @@ También puedes entrar directo con `?demo=1` en la URL.
 - **Colores y tipografías:** las variables CSS en `:root`.
 - **Nombres de los rasgos:** la constante `RASGO`.
 - **Meta del Corazón de Afecto:** la constante `META_AFECTO` (100 corazones).
+- **Retratos:** las constantes `RETRATO` y `RETRATO_TARJETA`.
 - **Ilustraciones:** el bloque `<svg id="sprites">`. Cada dibujo es un `<symbol>` con su `id`;
   para cambiar uno solo edita ese símbolo y se actualiza en todas las pantallas donde aparece.
