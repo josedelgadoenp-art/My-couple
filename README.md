@@ -27,6 +27,8 @@ completo del español. El juego se ve idéntico aunque no cargue nada externo.
 
 ```
 public/index.html            el juego completo (arte, tipografías, estilos y lógica)
+public/favicon.*             el icono del sitio, con el corazón del logo de Fer y José
+public/site.webmanifest      para agregar el juego a la pantalla de inicio del celular
 public/assets/               retratos, escenas del podio y ramo (ver assets/LEEME.md)
 netlify/functions/sala.mjs   función serverless que sincroniza los dos celulares
 netlify.toml                 configuración de Netlify
