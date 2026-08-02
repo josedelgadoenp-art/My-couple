@@ -15,3 +15,11 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Red de seguridad: si el despliegue es manual y no se lee la ruta declarada
+# dentro de la función, esta reescritura mantiene /api/sala funcionando igual.
+[[redirects]]
+  from = "/api/sala"
+  to = "/.netlify/functions/sala"
+  status = 200
+  force = true

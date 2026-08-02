@@ -32,6 +32,7 @@ public/site.webmanifest      para agregar el juego a la pantalla de inicio del c
 public/assets/               retratos, escenas del podio y ramo (ver assets/LEEME.md)
 netlify/functions/sala.mjs   función serverless que sincroniza los dos celulares
 netlify.toml                 configuración de Netlify
+empaquetar.sh                arma el ZIP para subirlo a Netlify a mano
 ```
 
 ## Las imágenes
@@ -55,11 +56,24 @@ reemplazar los archivos conservando los nombres; los detalles están en
 
 ### 2. Netlify
 
-1. Sube este repositorio a Netlify (o arrastra la carpeta completa a Netlify Drop).
+**Desde el repositorio (recomendado):**
+
+1. Conecta este repositorio en Netlify.
 2. En **Site configuration → Environment variables** agrega las dos variables de arriba
    con exactamente esos nombres.
 3. Despliega. Netlify lee `netlify.toml` solo: publica `public/` y monta la función en `/api/sala`.
 4. Si usas tu dominio propio, apúntalo como siempre.
+
+**A mano, sin repositorio:**
+
+```bash
+./empaquetar.sh          # genera carrera-del-amor.zip
+```
+
+El script aplana `public/` a la raíz —que es lo que Netlify publica cuando no hay build— y
+mete la función a un lado. Arrastra el ZIP completo, sin descomprimir, a
+**Add new site → Deploy manually**. Después agrega las variables de entorno y **vuelve a
+subir el ZIP**: las variables solo se aplican en un despliegue nuevo.
 
 ### 3. Probar
 
