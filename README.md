@@ -90,7 +90,7 @@ También hay un botón de **Cómo se juega** en el lobby que abre estas reglas d
 
 ### Modo demo
 
-El botón **PROBAR EN MODO DEMO** juega contra la computadora en un solo dispositivo: sirve
+El botón **Modo demo** del lobby juega contra la computadora en un solo dispositivo: sirve
 para enseñar el juego o probar el diseño sin necesidad de servidor. Si el sitio detecta que
 `/api/sala` no responde, el demo se vuelve la opción principal automáticamente.
 También puedes entrar directo con `?demo=1` en la URL.
@@ -121,7 +121,7 @@ También puedes entrar directo con `?demo=1` en la URL.
 - **Preguntas:** el arreglo `BANK` al inicio del `<script>`. Cada entrada tiene `a` (como la ves tú)
   y `b` (como la ve tu pareja, con `{X}` para el nombre). Hay 67; agrega las que quieras.
   Si agregas preguntas, añade también su respuesta en `DEMO_ANS` (misma posición) para el modo demo.
-- **Nombres y equipos:** las constantes `NAMES` y `EQUIPO`.
+- **Nombres:** la constante `NAMES`.
 - **Tiempo de captura:** la constante `SETUP_SEG` (120 segundos).
 - **Casillas por ronda:** la constante `PREGUNTAS` (10).
 - **Tolerancia al escribir:** la función `acierta` acepta acentos, mayúsculas y errores de dedo
