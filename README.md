@@ -1,7 +1,12 @@
 # Carrera del Amor
 
-Juego de trivia de pareja para dos celulares. Cada quien contesta 10 preguntas sobre sí
-mismo, se intercambian las respuestas y gana quien adivine primero todo el tablero.
+Juego de trivia de pareja para dos celulares. Cada quien **adivina** 10 respuestas de su
+pareja, se intercambian y **cada quien califica** lo que el otro escribió sobre él. Gana
+quien tenga más aciertos.
+
+No hay comparación automática de textos: la persona que conoce la respuesta es la que
+decide si le atinaron. Así “el azul” cuenta igual que “azul”, y cuando alguien falla puede
+anotar cuál era la respuesta de verdad.
 
 **Dirección de arte:** rosa profundo y oro repujado, marcos de filigrana, tarjetas de
 pergamino con encaje, atardecer entre pétalos y un cielo de constelaciones de corazón
@@ -70,24 +75,26 @@ Si sale `{"error":"Faltan las variables de Upstash"}`, revisa el paso 2 y vuelve
 ## Cómo se juega
 
 1. **Elegir corredor.** Cada quien abre el sitio y toca su tarjeta con su retrato:
-   Fer (*Velocidad de Corazón*) o José (*Paciencia Infinita*). Arriba, la barra **Corazón de Afecto** acumula
-   todos los aciertos de la pareja durante la sesión.
+   Fer (*Velocidad de Corazón*) o José (*Paciencia Infinita*). Arriba, la barra **Corazón de
+   Afecto** acumula todos los aciertos de la pareja durante la sesión.
 2. **Abrir o entrar.** Uno toca **ABRIR NUESTRA SALA** y aparece un código de 4 caracteres
    en fichas de pergamino. El otro escribe ese código y toca **ENTRAR CON CÓDIGO**.
-3. **Nuestros Momentos (2 minutos).** Cada quien contesta 10 preguntas *sobre sí mismo* en
-   tarjetas de pergamino con candado y llave. La llave se abre cuando llenas la respuesta y
-   el reloj de bolsillo de corazón marca el tiempo que llevan juntos en la ronda.
+3. **Adivinar (3 minutos).** A cada quien le tocan 10 preguntas *sobre su pareja* y escribe
+   lo que cree que va a contestar. Las tarjetas de pergamino se marcan y la llave se abre
+   conforme las llenas; el reloj de bolsillo de corazón marca el tiempo.
 4. **Intercambio.** Las cartas, rosas y llaves vuelan por la pantalla: las respuestas
    cambian de dueño.
-5. **La carrera.** Semáforo de arranque de 3 luces y a correr. Cada acierto avanza una
-   casilla en tu carril; el tablero muestra a los dos, en medallón dorado, avanzando en vivo. Puedes **SALTAR**
-   una pregunta difícil o usar *"sí era, valió por honor"* cuando le atinaste con otras
-   palabras.
+5. **Calificar.** Ahora lees, una por una, la pregunta *sobre ti* y lo que tu pareja
+   escribió, y decides: **Sí, le atinó** o **No era**. Cada “sí” avanza una casilla en el
+   carril de tu pareja y los dos carriles se mueven en vivo. Cuando alguien falla puedes
+   anotarle **cuál era la respuesta** — es opcional y aparece al final.
 6. **El podio.** Cielo de constelaciones de corazón, corona flotante, la frase escrita a
    mano letra por letra y la ilustración de los dos celebrando —cambia según quién gana—
    sobre un pedestal de mármol con ramos de rosas: placa de oro con corona para quien gana
-   y de plata con medalla para el segundo, cada una con su retrato. Quien abrió la sala controla el botón de **siguiente ronda**;
-   el marcador se acumula toda la sesión.
+   y de plata con medalla para el segundo, cada una con su retrato. El botón **Ver nuestras
+   respuestas** abre el repaso de la ronda: qué escribiste, si le atinaste y la respuesta
+   verdadera. Quien abrió la sala controla el botón de **siguiente ronda**; el marcador se
+   acumula toda la sesión.
 
 También hay un botón de **Cómo se juega** en el lobby que abre estas reglas dentro del juego.
 
@@ -110,8 +117,10 @@ También puedes entrar directo con `?demo=1` en la URL.
   números de `RITMO` en `public/index.html`.
 - **Autoridad:** el anfitrión (quien creó la sala) decide los cambios de fase, sortea las
   preguntas y declara al ganador. El invitado sigue lo que publica el anfitrión.
-- **Empates:** si ambos completan el tablero, gana quien tardó menos (el tiempo se mide en cada
-  dispositivo desde el arranque de la carrera, no por reloj de pared).
+- **Empates:** si los dos terminan con los mismos aciertos, ganan los dos.
+- **Fin de la ronda:** el resultado se cierra cuando los dos terminaron de calificar. Si uno
+  se queda a medias, el anfitrión puede cerrarla con *Terminar ronda*, y de todos modos se
+  cierra sola a los 2 min 30 s (`ESPERA_CALIF`).
 - **Reconexión:** el rol se guarda en `sessionStorage`. Si recargas, aparece el botón
   *Retomar sala* en el lobby.
 - **Sala:** vive 6 horas en Redis y luego expira sola.
@@ -125,10 +134,8 @@ También puedes entrar directo con `?demo=1` en la URL.
   y `b` (como la ve tu pareja, con `{X}` para el nombre). Hay 67; agrega las que quieras.
   Si agregas preguntas, añade también su respuesta en `DEMO_ANS` (misma posición) para el modo demo.
 - **Nombres:** la constante `NAMES`.
-- **Tiempo de captura:** la constante `SETUP_SEG` (120 segundos).
-- **Casillas por ronda:** la constante `PREGUNTAS` (10).
-- **Tolerancia al escribir:** la función `acierta` acepta acentos, mayúsculas y errores de dedo
-  hasta un 78% de similitud. Súbelo o bájalo ahí mismo.
+- **Tiempo para adivinar:** la constante `SETUP_SEG` (180 segundos).
+- **Preguntas por ronda:** la constante `PREGUNTAS` (10).
 - **Colores y tipografías:** las variables CSS en `:root`.
 - **Nombres de los rasgos:** la constante `RASGO`.
 - **Meta del Corazón de Afecto:** la constante `META_AFECTO` (100 corazones).
