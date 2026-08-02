@@ -496,20 +496,6 @@ body[data-screen="setup"] .net span,body[data-screen="play"] .net span{display:n
 @keyframes sube{from{transform:translate(-50%,0) scale(.4);opacity:0}28%{opacity:1}
   to{transform:translate(-50%,-140px) scale(1.5);opacity:0}}
 
-.arranque{position:absolute;inset:0;z-index:22;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:22px;background:rgba(40,4,22,.9);backdrop-filter:blur(10px)}
-.faroles{display:flex;gap:16px;padding:16px 22px;border-radius:999px;
-  background:linear-gradient(180deg,var(--vino2),var(--vino));
-  box-shadow:0 0 0 3px var(--oro),0 18px 40px rgba(20,0,10,.7),inset 0 2px 0 rgba(255,220,160,.3)}
-.faroles i{width:36px;height:36px;border-radius:50%;background:#40102a;
-  box-shadow:inset 0 3px 8px rgba(0,0,0,.8)}
-.faroles i.on{background:radial-gradient(circle at 35% 30%,#ffd0dc,#ff4f86 62%,#8d0a3d);
-  box-shadow:0 0 26px rgba(255,90,140,.95),inset 0 2px 6px rgba(255,255,255,.45)}
-.faroles i.ya{background:radial-gradient(circle at 35% 30%,#fff6d2,#ffd23f 60%,#b58405);
-  box-shadow:0 0 30px rgba(255,210,90,.95)}
-.arranqueTxt{font-family:var(--letra);font-size:clamp(34px,11vw,60px);color:var(--oro-luz);
-  text-shadow:0 0 26px rgba(255,190,120,.9);animation:latir .7s ease-in-out infinite}
-
 /* ============================================================
    RESULTADO
    ============================================================ */
@@ -1186,11 +1172,11 @@ const RITMO={lobby:2500,setup:2500,swap:1500,play:1100,result:2500};
 
 let ME='J',OTRO='F',HOST=false,CODE='',DEMO=false,sinServidor=false;
 let room={phase:'lobby',round:1,wins:{J:0,F:0},q:{J:[],F:[]},target:PREGUNTAS,result:null,rid:1,used:[],corazones:0};
-const nuevoJugador=rid=>({rid,ready:false,ans:[],calif:[],corr:[],hechas:0,done:false,elapsed:0});
+const nuevoJugador=rid=>({rid,ready:false,ans:[],calif:[],corr:[],hechas:0,done:false});
 const aciertosDe=a=>(a||[]).filter(v=>v===true).length;
 let mine=nuevoJugador(1);
 let opp=Object.assign(nuevoJugador(0),{visto:false});
-let localPhase='lobby',pollId=null,tickId=null,quedan=SETUP_SEG,playStart=0;
+let localPhase='lobby',pollId=null,tickId=null,quedan=SETUP_SEG;
 let cola=[],pos=0,resolviendo=false,ultimoEnviado='',fallos=0,ocupado=false,bloqueado=false;
 
 const $=id=>document.getElementById(id);
@@ -1289,7 +1275,7 @@ function demoSync(){
       if(!bot.calif[i]) bot.corr[i]=DEMO_ANS[(room.q[OTRO]||[])[i]]||'';
       bot.hechas++; bot.paso=ahora;
     }
-    if(bot.hechas>=(room.target||PREGUNTAS)){ bot.done=true; bot.elapsed=ahora-bot.t0; }
+    if(bot.hechas>=(room.target||PREGUNTAS)) bot.done=true;
   }
   opp=Object.assign(opp,bot,{visto:true});
   setNet('ok','MODO DEMO');
@@ -1405,7 +1391,7 @@ $('crear').onclick=async()=>{
   $('err').textContent='Abriendo la sala…';
   HOST=true;CODE=codigo();
   room={phase:'lobby',round:1,wins:{J:0,F:0},q:{J:[],F:[]},target:PREGUNTAS,result:null,rid:1,used:[],corazones:0};
-  mine={rid:1,ready:false,ans:[],prog:0,done:false,elapsed:0};
+  mine=nuevoJugador(1);
   try{
     const r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},
       body:JSON.stringify({code:CODE,who:ME,data:{h:true,p:mine,r:room}})});
@@ -1430,7 +1416,7 @@ $('unirse').onclick=async()=>{
   HOST=false;ME=hostId==='J'?'F':'J';OTRO=hostId;
   pinta($('avA'),ME); pinta($('avB'),OTRO);
   room=j[hostId].r||room;
-  mine={rid:room.rid||1,ready:false,ans:[],prog:0,done:false,elapsed:0};
+  mine=nuevoJugador(room.rid||1);
   await sync(true);
   guardarSesion();
   $('err').textContent='';
@@ -1464,7 +1450,7 @@ $('telonReglas').onclick=e=>{if(e.target===$('telonReglas'))$('telonReglas').cla
         pinta($('avA'),ME); pinta($('avB'),OTRO);
         if(!HOST){ try{const r=await fetch(API+'?code='+CODE);const j=await r.json();
           if(j[OTRO]&&j[OTRO].r) room=j[OTRO].r;}catch(e){} }
-        mine={rid:room.rid||1,ready:false,ans:[],prog:0,done:false,elapsed:0};
+        mine=nuevoJugador(room.rid||1);
         $('cardPick').style.display='none';$('cardWait').style.display='flex';
         $('accCopiar').disabled=false;
         pintarCodigo(CODE);arrancarRed();
@@ -1540,7 +1526,7 @@ function nuevaRonda(){
   mine=nuevoJugador(room.rid);
   resolviendo=false;
   if(DEMO){ Object.assign(bot,nuevoJugador(room.rid),{t0:0,paso:0});
-    opp=Object.assign(opp,{ready:false,ans:[],calif:[],corr:[],hechas:0,done:false,elapsed:0}); }
+    opp=Object.assign(opp,{ready:false,ans:[],calif:[],corr:[],hechas:0,done:false}); }
   sync(true);aplicarRoom(room);
 }
 function aplicarRoom(r){
@@ -1652,7 +1638,7 @@ function abrirSwap(){
     f.style.animation=(i%2?'volarI':'volarD')+' '+(1.1+Math.random()*.9)+'s ease-in '+(i*.06)+'s forwards';
     sw.appendChild(f);
   }
-  setTimeout(()=>{$('swapTitle').textContent='¿Listos? ¡A correr!';beep(1047,.22);},1800);
+  setTimeout(()=>{$('swapTitle').textContent='Ahora sí: ¿le atinó?';beep(1047,.22);},1800);
 }
 
 /* ============================================================
@@ -1679,28 +1665,10 @@ function abrirPlay(){
   $('playTeam').textContent='CALIFICA SUS RESPUESTAS';
   $('terminar').style.display=(HOST&&!DEMO)?'flex':'none';
   ocultarArreglo();
-  show('play');
+  show('play');sGo();
   pintarCalificacion();pintarTablero();
-  arrancarSemaforo(()=>{
-    playStart=Date.now();
-    if(DEMO){bot.t0=Date.now();bot.paso=Date.now();}
-  });
-}
-function arrancarSemaforo(cb){
-  bloqueado=true;
-  const d=document.createElement('div');d.className='arranque';
-  d.innerHTML='<div class="faroles"><i></i><i></i><i></i></div><div class="arranqueTxt">En sus marcas</div>';
-  $('play').appendChild(d);
-  const luces=d.querySelectorAll('.faroles i'),txt=d.querySelector('.arranqueTxt');
-  let n=0;
-  const paso=()=>{
-    if(n<3){luces[n].classList.add('on');beep(560,.13);
-      txt.textContent=['A ver qué escribió','¿Le habrá atinado?','Sin piedad'][n];n++;setTimeout(paso,620);}
-    else{luces.forEach(l=>{l.classList.remove('on');l.classList.add('ya');});
-      txt.textContent='¡A calificar!';sGo();
-      setTimeout(()=>{d.remove();bloqueado=false;cb&&cb();},560);}
-  };
-  setTimeout(paso,260);
+  if(DEMO){bot.t0=Date.now();bot.paso=Date.now();}
+  guardaToques(450);   /* que un dedo en camino no califique solo */
 }
 function pintarCalificacion(){
   const box=$('qBox');
@@ -1746,6 +1714,15 @@ function feedback(ok){
     burst(innerWidth/2,innerHeight*.5,COLORS[OTRO],60);sOk();}
   else{body.classList.add('temblor');setTimeout(()=>body.classList.remove('temblor'),460);sNo();}
 }
+/* Deja los botones apagados un instante al llegar la pantalla o la siguiente respuesta. */
+function guardaToques(ms){
+  bloqueado=true;
+  $('siEra').disabled=true;$('noEra').disabled=true;
+  clearTimeout(guardaToques.t);
+  guardaToques.t=setTimeout(()=>{
+    bloqueado=false;$('siEra').disabled=false;$('noEra').disabled=false;
+  },ms||450);
+}
 function mostrarArreglo(idx){
   $('veredicto').hidden=true;
   const a=$('arreglo');a.hidden=false;a.dataset.i=idx;
@@ -1767,8 +1744,7 @@ function calificar(ok){
 function avanzar(){
   pos++;
   if(pos>=cola.length){
-    mine.done=true;mine.elapsed=Date.now()-playStart;
-    sync(true);
+    mine.done=true;sync(true);
     if(HOST&&opp.done&&!resolviendo){resolviendo=true;setTimeout(resolver,1600);}
   }
   pintarCalificacion();
